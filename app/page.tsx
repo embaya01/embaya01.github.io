@@ -9,6 +9,7 @@ import { Services } from "@/components/sections/services"
 import { Portfolio } from "@/components/sections/portfolio"
 import { Contact } from "@/components/sections/contact"
 import { PageViewTracker } from "@/components/page-view-tracker"
+import { FloatingNav } from "@/components/floating-nav"
 import {
   getProfile,
   getSkills,
@@ -34,8 +35,7 @@ async function fetchPortfolioData() {
 }
 
 export default function HomePage() {
-  const { data, isLoading, error } = useSWR("portfolio-data", fetchPortfolioData)
-  console.log("[v0] HomePage render - isLoading:", isLoading, "error:", error, "data:", data)
+  const { data, isLoading } = useSWR("portfolio-data", fetchPortfolioData)
 
   if (isLoading || !data) {
     return (
@@ -51,6 +51,7 @@ export default function HomePage() {
   return (
     <main>
       <PageViewTracker />
+      <FloatingNav />
       <Hero profile={data.profile} />
       <About profile={data.profile} />
       <Skills skills={data.skills} />
