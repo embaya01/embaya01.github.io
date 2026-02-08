@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { Twitter, Facebook, Instagram, Linkedin } from "lucide-react"
 import type { ProfileData } from "@/lib/firestore"
 
@@ -49,12 +48,12 @@ export function Hero({ profile }: HeroProps) {
           <ul className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
-                <Link
+                <a
                   href={item.href}
                   className="text-sm uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary"
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

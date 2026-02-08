@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
+
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
@@ -63,16 +63,16 @@ export function FloatingNav() {
     >
       <div className="border-b border-border/50 bg-background/80 backdrop-blur-md">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
-          <Link
+          <a
             href="#home"
             className="font-display text-lg font-bold text-foreground transition-colors hover:text-primary"
           >
             EM
-          </Link>
+          </a>
           <ul className="flex items-center gap-3 md:gap-5">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
-                <Link
+                <a
                   href={item.href}
                   className={`text-xs uppercase tracking-wider transition-colors md:text-sm ${
                     activeSection === item.href.slice(1)
@@ -81,7 +81,7 @@ export function FloatingNav() {
                   }`}
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
