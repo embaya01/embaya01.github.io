@@ -34,8 +34,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${openSans.variable} ${raleway.variable} ${poppins.variable} font-sans antialiased`}
       >
         {children}
