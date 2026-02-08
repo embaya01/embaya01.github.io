@@ -4,8 +4,12 @@ import { NextResponse } from "next/server"
 
 export async function POST() {
   try {
+    console.log("[v0] Seed route called")
+    console.log("[v0] Firebase project ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID)
+    
     // Check if already seeded
     const profileSnap = await getDoc(doc(db, "settings", "profile"))
+    console.log("[v0] Profile check done, exists:", profileSnap.exists())
     if (profileSnap.exists()) {
       return NextResponse.json({ message: "Already seeded" })
     }
@@ -139,7 +143,8 @@ export async function POST() {
 
     return NextResponse.json({ message: "Database seeded successfully" })
   } catch (error) {
-    console.error("Seed error:", error)
-    return NextResponse.json({ error: "Failed to seed database" }, { status: 500 })
+    console.error("[v0] Seed error:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
+    return NextResponse.json({ error: `Failed to seed database: ${errorMessage}` }, { status: 500 })
   }
 }

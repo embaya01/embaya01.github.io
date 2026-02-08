@@ -6,16 +6,26 @@ import { Database, Loader2 } from "lucide-react"
 export function SeedPanel() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
+  const [isError, setIsError] = useState(false)
 
   async function handleSeed() {
     setLoading(true)
     setMessage("")
+    setIsError(false)
     try {
       const res = await fetch("/api/seed", { method: "POST" })
       const data = await res.json()
-      setMessage(data.message || data.error || "Done!")
-    } catch {
-      setMessage("Failed to seed database.")
+      console.log("[v0] Seed response:", res.status, data)
+      if (!res.ok) {
+        setIsError(true)
+        setMessage(data.error || "Failed to seed database")
+      } else {
+        setMessage(data.message || "Done!")
+      }
+    } catch (err) {
+      console.error("[v0] Seed fetch error:", err)
+      setIsError(true)
+      setMessage("Failed to seed database: " + (err instanceof Error ? err.message : "Network error"))
     } finally {
       setLoading(false)
     }
@@ -30,7 +40,7 @@ export function SeedPanel() {
       </p>
 
       {message && (
-        <div className="mt-4 rounded-md bg-primary/10 px-4 py-3 text-sm text-primary">
+        <div className={`mt-4 rounded-md px-4 py-3 text-sm ${isError ? "bg-red-500/10 text-red-400" : "bg-primary/10 text-primary"}`}>
           {message}
         </div>
       )}
