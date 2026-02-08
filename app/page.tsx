@@ -34,7 +34,8 @@ async function fetchPortfolioData() {
 }
 
 export default function HomePage() {
-  const { data, isLoading } = useSWR("portfolio-data", fetchPortfolioData)
+  const { data, isLoading, error } = useSWR("portfolio-data", fetchPortfolioData)
+  console.log("[v0] HomePage render - isLoading:", isLoading, "error:", error, "data:", data)
 
   if (isLoading || !data) {
     return (
