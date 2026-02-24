@@ -1,15 +1,16 @@
 "use client"
 
 import Image from "next/image"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Download } from "lucide-react"
 import type { ProfileData } from "@/lib/firestore"
 import { SectionHeading } from "@/components/ui/section-heading"
 
 interface AboutProps {
   profile: ProfileData | null
+  resumeUrl: string
 }
 
-export function About({ profile }: AboutProps) {
+export function About({ profile, resumeUrl }: AboutProps) {
   if (!profile) return null
 
   const leftDetails = [
@@ -96,6 +97,17 @@ export function About({ profile }: AboutProps) {
               individual equipped with the necessary skills to bring your project
               ideas (Web, mobile or desktop app) to life.
             </p>
+
+            {resumeUrl && (
+              <a
+                href={resumeUrl}
+                download
+                className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                <Download className="h-4 w-4" />
+                Resume
+              </a>
+            )}
           </div>
         </div>
       </div>
