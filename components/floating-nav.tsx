@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 
-
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },

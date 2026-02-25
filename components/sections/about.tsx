@@ -5,6 +5,37 @@ import { ChevronRight, Download } from "lucide-react"
 import type { ProfileData } from "@/lib/firestore"
 import { SectionHeading } from "@/components/ui/section-heading"
 
+/* -- Sub-components -- */
+
+/** Single contact detail row */
+function ContactDetail({
+  label,
+  value,
+  href,
+}: {
+  label: string
+  value: string
+  href?: string
+}) {
+  return (
+    <li className="flex items-start gap-2 text-sm">
+      <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+      <span>
+        <strong className="text-foreground">{label}:</strong>{" "}
+        {href ? (
+          <a href={href} className="text-primary hover:underline">
+            {value}
+          </a>
+        ) : (
+          <span className="text-muted-foreground">{value}</span>
+        )}
+      </span>
+    </li>
+  )
+}
+
+/* -- Main component -- */
+
 interface AboutProps {
   profile: ProfileData | null
   resumeUrl: string
@@ -13,17 +44,13 @@ interface AboutProps {
 export function About({ profile, resumeUrl }: AboutProps) {
   if (!profile) return null
 
-  const contactDetails = [
-    { label: "Phone", value: profile.phone },
-    { label: "Email", value: profile.email, link: `mailto:${profile.email}` },
-  ]
-
   return (
     <section id="about" className="bg-card py-20">
       <div className="mx-auto max-w-6xl px-4">
         <SectionHeading title="About" subtitle="Learn more about me" />
 
         <div className="mt-12 flex flex-col items-start gap-10 lg:flex-row">
+          {/* Profile photo */}
           <div className="w-full flex-shrink-0 lg:w-1/3">
             <Image
               src={profile.photoUrl || "/images/me.jpg"}
@@ -33,6 +60,8 @@ export function About({ profile, resumeUrl }: AboutProps) {
               className="rounded-lg object-cover"
             />
           </div>
+
+          {/* Bio, contact details, and resume */}
           <div className="flex-1">
             <h3 className="font-heading text-2xl font-semibold text-foreground">
               {profile.title}
@@ -46,24 +75,12 @@ export function About({ profile, resumeUrl }: AboutProps) {
             </p>
 
             <ul className="mt-6 space-y-2">
-              {contactDetails.map((d) => (
-                <li key={d.label} className="flex items-start gap-2 text-sm">
-                  <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                  <span>
-                    <strong className="text-foreground">{d.label}:</strong>{" "}
-                    {d.link ? (
-                      <a
-                        href={d.link}
-                        className="text-primary hover:underline"
-                      >
-                        {d.value}
-                      </a>
-                    ) : (
-                      <span className="text-muted-foreground">{d.value}</span>
-                    )}
-                  </span>
-                </li>
-              ))}
+              <ContactDetail label="Phone" value={profile.phone} />
+              <ContactDetail
+                label="Email"
+                value={profile.email}
+                href={`mailto:${profile.email}`}
+              />
             </ul>
 
             {resumeUrl && (

@@ -4,19 +4,11 @@ import useSWR from "swr"
 import { Hero } from "@/components/sections/hero"
 import { About } from "@/components/sections/about"
 import { Skills } from "@/components/sections/skills"
-
-
 import { Portfolio } from "@/components/sections/portfolio"
 import { Contact } from "@/components/sections/contact"
 import { PageViewTracker } from "@/components/page-view-tracker"
 import { FloatingNav } from "@/components/floating-nav"
-import {
-  getProfile,
-  getSkills,
-
-  getProjects,
-  getResumeUrl,
-} from "@/lib/firestore"
+import { getProfile, getSkills, getProjects, getResumeUrl } from "@/lib/firestore"
 
 async function fetchPortfolioData() {
   const [profile, skills, projects, resumeUrl] =

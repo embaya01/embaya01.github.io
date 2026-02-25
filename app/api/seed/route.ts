@@ -4,12 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function POST() {
   try {
-    console.log("[v0] Seed route called")
-    console.log("[v0] Firebase project ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID)
-    
     // Check if already seeded
     const profileSnap = await getDoc(doc(db, "settings", "profile"))
-    console.log("[v0] Profile check done, exists:", profileSnap.exists())
     if (profileSnap.exists()) {
       return NextResponse.json({ message: "Already seeded" })
     }
