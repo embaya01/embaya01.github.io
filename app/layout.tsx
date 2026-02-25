@@ -19,9 +19,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Elisee Mbaya | Software Developer & Web Designer",
+  title: "Elisee Mbaya | Portfolio",
   description:
-    "Personal portfolio of Elisee Mbaya - Software Developer & Web Designer specializing in Web, Mobile, Desktop, AI/ML, and Pentesting.",
+    "Personal portfolio of Elisee Mbaya - AI Engineer.",
 }
 
 export const viewport: Viewport = {

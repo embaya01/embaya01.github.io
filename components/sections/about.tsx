@@ -47,7 +47,7 @@ export function About({ profile, resumeUrl }: AboutProps) {
   return (
     <section id="about" className="bg-card py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <SectionHeading title="About" subtitle="Learn more about me" />
+        <SectionHeading title="About Me" subtitle="Learn more about me" />
 
         <div className="mt-12 flex flex-col items-start gap-10 lg:flex-row">
           {/* Profile photo */}
