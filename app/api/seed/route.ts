@@ -4,12 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function POST() {
   try {
-    console.log("[v0] Seed route called")
-    console.log("[v0] Firebase project ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID)
-    
     // Check if already seeded
     const profileSnap = await getDoc(doc(db, "settings", "profile"))
-    console.log("[v0] Profile check done, exists:", profileSnap.exists())
     if (profileSnap.exists()) {
       return NextResponse.json({ message: "Already seeded" })
     }
@@ -17,25 +13,23 @@ export async function POST() {
     // Profile
     await setDoc(doc(db, "settings", "profile"), {
       name: "Elisee Mbaya",
-      tagline: "Software Developer & Web Designer",
-      title: "Software Developer",
-      bio: "I am a dedicated Software Developer with years of experience self-teaching and practicing the skills of Java, Python, etc.",
+      tagline: "AI Engineer",
+      title: "AI Engineer",
+      bio: "I am a dedicated AI Engineer with years of experience self-teaching and practicing the skills of Java, Python, etc.",
       summary:
         "Innovative and deadline-driven developer with 2 years of non-professional experience in visual privacy and java development. Also possess multiple programming skills self-taught on various opportunity.",
       birthday: "July 27",
       website: "www.embaya01.github.io",
-      phone: "+1 920 530 3550 (WhatsApp)",
-      city: "St George's, Grenada",
-      degree: "Bachelor in Computer Science",
-      email: "junimbaya9@gmail.com",
-      freelance: "Available",
-      address: "2210 Nicolet Drive Apt 7, Green Bay, WI 54311",
+      phone: "+1 803 554 0075",
+      city: "Rock Hill, SC",
+      degree: "Bachelor of Sciences in Computer Science",
+      email: "eliseembaya1@gmail.com",
+      address: "2866 Ebinwood Rd, Rock Hill, SC 29732",
       photoUrl: "/images/me.jpg",
       twitter: "https://twitter.com/El_Hack01",
       facebook: "https://www.facebook.com/elisee.mby.5",
       instagram: "https://www.instagram.com/elisee_mby/",
       linkedin: "https://www.linkedin.com/in/eliseembaya/",
-      whatsappLink: "https://wa.me/qr/AKSBITBRH65BA1",
     })
 
     // Resume
@@ -53,18 +47,11 @@ export async function POST() {
         order: 0,
       },
       {
-        title: "Bachelor of Sciences & Computer Science",
+        title: "Bachelor of Sciences in Computer Science",
         years: "2017 - 2020",
         institution: "University of Wisconsin Green-Bay, Green Bay, WI",
         details: "Emphasis: Software Development & Information Security. GPA: 3.4",
         order: 1,
-      },
-      {
-        title: "LinkedIn Learning Courses & Self Teaching",
-        years: "2020 - Current",
-        institution: "Online",
-        details: "Courses: Java Developer, Python Developer, Full-Stack Developer",
-        order: 2,
       },
     ]
     for (const item of educationItems) {

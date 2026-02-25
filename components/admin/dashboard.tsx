@@ -4,21 +4,15 @@ import { useState } from "react"
 import {
   LayoutDashboard,
   User,
-  GraduationCap,
-  Briefcase,
-  FolderOpen,
-  Wrench,
   Code,
+  FolderOpen,
   FileText,
   LogOut,
   Database,
 } from "lucide-react"
 import { TrafficPanel } from "./panels/traffic-panel"
 import { ProfilePanel } from "./panels/profile-panel"
-import { EducationPanel } from "./panels/education-panel"
-import { ExperiencePanel } from "./panels/experience-panel"
 import { SkillsPanel } from "./panels/skills-panel"
-import { ServicesPanel } from "./panels/services-panel"
 import { ProjectsPanel } from "./panels/projects-panel"
 import { ResumePanel } from "./panels/resume-panel"
 import { SeedPanel } from "./panels/seed-panel"
@@ -30,10 +24,7 @@ interface DashboardProps {
 const TABS = [
   { id: "traffic", label: "Traffic", icon: LayoutDashboard },
   { id: "profile", label: "Profile", icon: User },
-  { id: "education", label: "Education", icon: GraduationCap },
-  { id: "experience", label: "Experience", icon: Briefcase },
   { id: "skills", label: "Skills", icon: Code },
-  { id: "services", label: "Services", icon: Wrench },
   { id: "projects", label: "Projects", icon: FolderOpen },
   { id: "resume", label: "Resume", icon: FileText },
   { id: "seed", label: "Seed Data", icon: Database },
@@ -49,7 +40,7 @@ export function AdminDashboard({ onLogout }: DashboardProps) {
       {/* Sidebar */}
       <aside className="sticky top-0 flex h-screen w-64 flex-shrink-0 flex-col border-r border-border bg-card">
         <div className="flex items-center gap-2 border-b border-border px-6 py-5">
-          <div className="h-8 w-8 rounded-md bg-primary/10 flex items-center justify-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
             <LayoutDashboard className="h-4 w-4 text-primary" />
           </div>
           <h1 className="font-heading text-lg font-bold text-foreground">Admin</h1>
@@ -89,14 +80,11 @@ export function AdminDashboard({ onLogout }: DashboardProps) {
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* Main content */}
       <main className="flex-1 overflow-y-auto p-8">
         {activeTab === "traffic" && <TrafficPanel />}
         {activeTab === "profile" && <ProfilePanel />}
-        {activeTab === "education" && <EducationPanel />}
-        {activeTab === "experience" && <ExperiencePanel />}
         {activeTab === "skills" && <SkillsPanel />}
-        {activeTab === "services" && <ServicesPanel />}
         {activeTab === "projects" && <ProjectsPanel />}
         {activeTab === "resume" && <ResumePanel />}
         {activeTab === "seed" && <SeedPanel />}

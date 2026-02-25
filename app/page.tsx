@@ -4,34 +4,21 @@ import useSWR from "swr"
 import { Hero } from "@/components/sections/hero"
 import { About } from "@/components/sections/about"
 import { Skills } from "@/components/sections/skills"
-import { Resume } from "@/components/sections/resume"
-import { Services } from "@/components/sections/services"
 import { Portfolio } from "@/components/sections/portfolio"
 import { Contact } from "@/components/sections/contact"
 import { PageViewTracker } from "@/components/page-view-tracker"
 import { FloatingNav } from "@/components/floating-nav"
-import {
-  getProfile,
-  getSkills,
-  getEducation,
-  getExperience,
-  getServices,
-  getProjects,
-  getResumeUrl,
-} from "@/lib/firestore"
+import { getProfile, getSkills, getProjects, getResumeUrl } from "@/lib/firestore"
 
 async function fetchPortfolioData() {
-  const [profile, skills, education, experience, services, projects, resumeUrl] =
+  const [profile, skills, projects, resumeUrl] =
     await Promise.all([
       getProfile(),
       getSkills(),
-      getEducation(),
-      getExperience(),
-      getServices(),
       getProjects(),
       getResumeUrl(),
     ])
-  return { profile, skills, education, experience, services, projects, resumeUrl }
+  return { profile, skills, projects, resumeUrl }
 }
 
 export default function HomePage() {
@@ -53,15 +40,8 @@ export default function HomePage() {
       <PageViewTracker />
       <FloatingNav />
       <Hero profile={data.profile} />
-      <About profile={data.profile} />
+      <About profile={data.profile} resumeUrl={data.resumeUrl} />
       <Skills skills={data.skills} />
-      <Resume
-        education={data.education}
-        experience={data.experience}
-        profile={data.profile}
-        resumeUrl={data.resumeUrl}
-      />
-      <Services services={data.services} />
       <Portfolio projects={data.projects} />
       <Contact profile={data.profile} />
     </main>
