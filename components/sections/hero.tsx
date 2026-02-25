@@ -66,10 +66,7 @@ export function Hero({ profile }: HeroProps) {
           {name}
         </h1>
         <h2 className="max-w-xl text-lg text-muted-foreground md:text-xl">
-          {"I'm a passionate "}
-          <span className="border-b-2 border-primary text-foreground">
-            {tagline}
-          </span>
+          {"I design AI systems that automate real-world business workflows."}
         </h2>
 
         {/* Navigation */}

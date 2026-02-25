@@ -68,12 +68,6 @@ export function About({ profile, resumeUrl }: AboutProps) {
             </h3>
             <p className="mt-3 italic text-muted-foreground">{profile.bio}</p>
 
-            <p className="mt-6 leading-relaxed text-muted-foreground">
-              I am a quick learner, hard working, motivated and flexible
-              individual equipped with the necessary skills to bring your project
-              ideas (Web, mobile or desktop app) to life.
-            </p>
-
             <ul className="mt-6 space-y-2">
               <ContactDetail label="Phone" value={profile.phone} />
               <ContactDetail
