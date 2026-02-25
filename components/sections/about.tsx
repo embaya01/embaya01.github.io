@@ -13,17 +13,9 @@ interface AboutProps {
 export function About({ profile, resumeUrl }: AboutProps) {
   if (!profile) return null
 
-  const leftDetails = [
-    { label: "Birthday", value: profile.birthday },
-    { label: "Website", value: profile.website, link: `https://${profile.website}` },
+  const contactDetails = [
     { label: "Phone", value: profile.phone },
-    { label: "City", value: profile.city },
-  ]
-
-  const rightDetails = [
-    { label: "Degree", value: profile.degree },
     { label: "Email", value: profile.email, link: `mailto:${profile.email}` },
-    { label: "Freelance", value: profile.freelance },
   ]
 
   return (
@@ -47,56 +39,32 @@ export function About({ profile, resumeUrl }: AboutProps) {
             </h3>
             <p className="mt-3 italic text-muted-foreground">{profile.bio}</p>
 
-            <div className="mt-6 grid gap-2 sm:grid-cols-2">
-              <ul className="space-y-2">
-                {leftDetails.map((d) => (
-                  <li key={d.label} className="flex items-start gap-2 text-sm">
-                    <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                    <span>
-                      <strong className="text-foreground">{d.label}:</strong>{" "}
-                      {d.link ? (
-                        <a
-                          href={d.link}
-                          className="text-primary hover:underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {d.value}
-                        </a>
-                      ) : (
-                        <span className="text-muted-foreground">{d.value}</span>
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <ul className="space-y-2">
-                {rightDetails.map((d) => (
-                  <li key={d.label} className="flex items-start gap-2 text-sm">
-                    <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                    <span>
-                      <strong className="text-foreground">{d.label}:</strong>{" "}
-                      {d.link ? (
-                        <a
-                          href={d.link}
-                          className="text-primary hover:underline"
-                        >
-                          {d.value}
-                        </a>
-                      ) : (
-                        <span className="text-muted-foreground">{d.value}</span>
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             <p className="mt-6 leading-relaxed text-muted-foreground">
               I am a quick learner, hard working, motivated and flexible
               individual equipped with the necessary skills to bring your project
               ideas (Web, mobile or desktop app) to life.
             </p>
+
+            <ul className="mt-6 space-y-2">
+              {contactDetails.map((d) => (
+                <li key={d.label} className="flex items-start gap-2 text-sm">
+                  <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                  <span>
+                    <strong className="text-foreground">{d.label}:</strong>{" "}
+                    {d.link ? (
+                      <a
+                        href={d.link}
+                        className="text-primary hover:underline"
+                      >
+                        {d.value}
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground">{d.value}</span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
 
             {resumeUrl && (
               <a

@@ -5,7 +5,7 @@ import { Hero } from "@/components/sections/hero"
 import { About } from "@/components/sections/about"
 import { Skills } from "@/components/sections/skills"
 
-import { Services } from "@/components/sections/services"
+
 import { Portfolio } from "@/components/sections/portfolio"
 import { Contact } from "@/components/sections/contact"
 import { PageViewTracker } from "@/components/page-view-tracker"
@@ -14,21 +14,19 @@ import {
   getProfile,
   getSkills,
 
-  getServices,
   getProjects,
   getResumeUrl,
 } from "@/lib/firestore"
 
 async function fetchPortfolioData() {
-  const [profile, skills, services, projects, resumeUrl] =
+  const [profile, skills, projects, resumeUrl] =
     await Promise.all([
       getProfile(),
       getSkills(),
-      getServices(),
       getProjects(),
       getResumeUrl(),
     ])
-  return { profile, skills, services, projects, resumeUrl }
+  return { profile, skills, projects, resumeUrl }
 }
 
 export default function HomePage() {
@@ -52,7 +50,6 @@ export default function HomePage() {
       <Hero profile={data.profile} />
       <About profile={data.profile} resumeUrl={data.resumeUrl} />
       <Skills skills={data.skills} />
-      <Services services={data.services} />
       <Portfolio projects={data.projects} />
       <Contact profile={data.profile} />
     </main>
