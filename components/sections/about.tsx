@@ -4,6 +4,7 @@ import Image from "next/image"
 import { ChevronRight, Download } from "lucide-react"
 import type { ProfileData } from "@/lib/firestore"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 /* -- Sub-components -- */
 
@@ -42,16 +43,24 @@ interface AboutProps {
 }
 
 export function About({ profile, resumeUrl }: AboutProps) {
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLDivElement>()
+
   if (!profile) return null
 
   return (
     <section id="about" className="bg-card py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <SectionHeading title="About Me" subtitle="Learn more about me" />
+      <div ref={sectionRef} className="mx-auto max-w-6xl px-4">
+        <SectionHeading title="About Me" subtitle="Learn more about me" animated isVisible={isVisible} />
 
         <div className="mt-12 flex flex-col items-start gap-10 lg:flex-row">
           {/* Profile photo */}
-          <div className="w-full flex-shrink-0 lg:w-1/3">
+          <div
+            className={`w-full flex-shrink-0 lg:w-1/3 transition-all ${
+              isVisible
+                ? "animate-in fade-in slide-in-from-left-8 duration-700 fill-mode-both"
+                : "opacity-0"
+            }`}
+          >
             <Image
               src={profile.photoUrl || "/images/me.jpg"}
               alt={profile.name}
@@ -62,17 +71,17 @@ export function About({ profile, resumeUrl }: AboutProps) {
           </div>
 
           {/* Bio, contact details, and resume */}
-          <div className="flex-1">
+          <div
+            className={`flex-1 transition-all ${
+              isVisible
+                ? "animate-in fade-in slide-in-from-right-8 duration-700 delay-150 fill-mode-both"
+                : "opacity-0"
+            }`}
+          >
             <h3 className="font-heading text-2xl font-semibold text-foreground">
               {profile.title}
             </h3>
             <p className="mt-3 italic text-muted-foreground">{profile.bio}</p>
-
-            <p className="mt-6 leading-relaxed text-muted-foreground">
-              I am a quick learner, hard working, motivated and flexible
-              individual equipped with the necessary skills to bring your project
-              ideas (Web, mobile or desktop app) to life.
-            </p>
 
             <ul className="mt-6 space-y-2">
               <ContactDetail label="Phone" value={profile.phone} />
@@ -87,7 +96,7 @@ export function About({ profile, resumeUrl }: AboutProps) {
               <a
                 href={resumeUrl}
                 download
-                className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-opacity hover:opacity-90"
+                className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-all hover:opacity-90 hover:scale-[1.02] hover:shadow-lg"
               >
                 <Download className="h-4 w-4" />
                 Resume

@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import type { ProfileData } from "@/lib/firestore"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 /* -- Sub-components -- */
 
@@ -68,6 +69,7 @@ interface ContactProps {
 }
 
 export function Contact({ profile }: ContactProps) {
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLDivElement>()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -95,53 +97,86 @@ export function Contact({ profile }: ContactProps) {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }))
   }
 
+  const infoCards = [
+    {
+      icon: MapPin,
+      title: "My Address",
+      content: <p className="mt-1 text-sm text-muted-foreground">{profile.address}</p>,
+    },
+    {
+      icon: Share2,
+      title: "Social Profiles",
+      content: (
+        <div className="mt-2 flex items-center gap-3">
+          {socialLinks.map((link) => (
+            <SocialIcon key={link.label} {...link} />
+          ))}
+        </div>
+      ),
+    },
+    {
+      icon: Mail,
+      title: "Email Me",
+      content: (
+        <a href={`mailto:${profile.email}`} className="mt-1 text-sm text-primary hover:underline">
+          {profile.email}
+        </a>
+      ),
+    },
+    {
+      icon: Phone,
+      title: "Call Me",
+      content: (
+        <p className="mt-1 text-sm text-muted-foreground">
+          {profile.phone}{" "}
+          {profile.whatsappLink && (
+            <a
+              href={profile.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              (WhatsApp)
+            </a>
+          )}
+        </p>
+      ),
+    },
+  ]
+
   return (
     <section id="contact" className="bg-background py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <SectionHeading title="Contact" subtitle="Contact Me" />
+      <div ref={sectionRef} className="mx-auto max-w-6xl px-4">
+        <SectionHeading title="Contact" subtitle="Contact Me" animated isVisible={isVisible} />
 
         {/* Info cards */}
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          <InfoCard icon={MapPin} title="My Address">
-            <p className="mt-1 text-sm text-muted-foreground">{profile.address}</p>
-          </InfoCard>
-
-          <InfoCard icon={Share2} title="Social Profiles">
-            <div className="mt-2 flex items-center gap-3">
-              {socialLinks.map((link) => (
-                <SocialIcon key={link.label} {...link} />
-              ))}
-            </div>
-          </InfoCard>
-
-          <InfoCard icon={Mail} title="Email Me">
-            <a
-              href={`mailto:${profile.email}`}
-              className="mt-1 text-sm text-primary hover:underline"
+          {infoCards.map((card, index) => (
+            <div
+              key={card.title}
+              className={`transition-all ${
+                isVisible
+                  ? "animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both"
+                  : "opacity-0"
+              }`}
+              style={{ animationDelay: `${100 + index * 100}ms` }}
             >
-              {profile.email}
-            </a>
-          </InfoCard>
-
-          <InfoCard icon={Phone} title="Call Me">
-            <p className="mt-1 text-sm text-muted-foreground">
-              {profile.phone}{" "}
-              {profile.whatsappLink && (
-                <a
-                  href={profile.whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  (WhatsApp)
-                </a>
-              )}
-            </p>
-          </InfoCard>
+              <InfoCard icon={card.icon} title={card.title}>
+                {card.content}
+              </InfoCard>
+            </div>
+          ))}
         </div>
 
         {/* Contact form */}
-        <form onSubmit={handleSubmit} className="mt-10 space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className={`mt-10 space-y-4 transition-all ${
+            isVisible
+              ? "animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500 fill-mode-both"
+              : "opacity-0"
+          }`}
+        >
           <div className="grid gap-4 md:grid-cols-2">
             <input
               type="text"
@@ -179,7 +214,7 @@ export function Contact({ profile }: ContactProps) {
           <div className="text-center">
             <button
               type="submit"
-              className="rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              className="rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-all hover:opacity-90 hover:scale-[1.02] hover:shadow-lg"
             >
               Send Message
             </button>
