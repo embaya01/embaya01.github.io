@@ -40,7 +40,6 @@ interface HeroProps {
 
 export function Hero({ profile }: HeroProps) {
   const name = profile?.name || "Elisee Mbaya"
-  const tagline = profile?.tagline || "Software Developer & Web Designer"
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
@@ -67,22 +66,31 @@ export function Hero({ profile }: HeroProps) {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-4 text-center">
         <h1
-          className={`font-display text-4xl font-bold tracking-tight text-primary md:text-6xl ${mounted ? "animate-fade-in-up" : "scroll-hidden"}`}
-          style={{ "--stagger-delay": "0ms" } as React.CSSProperties}
+          className={`font-display text-4xl font-bold tracking-tight text-primary md:text-6xl transition-all ${
+            mounted
+              ? "animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both"
+              : "opacity-0"
+          }`}
         >
           {name}
         </h1>
         <h2
-          className={`max-w-xl text-lg text-muted-foreground md:text-xl ${mounted ? "animate-fade-in-up" : "scroll-hidden"}`}
-          style={{ "--stagger-delay": "200ms" } as React.CSSProperties}
+          className={`max-w-xl text-lg text-muted-foreground md:text-xl transition-all ${
+            mounted
+              ? "animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 fill-mode-both"
+              : "opacity-0"
+          }`}
         >
           {"I design AI systems that automate real-world business workflows."}
         </h2>
 
         {/* Navigation */}
         <nav
-          className={`mt-4 ${mounted ? "animate-fade-in-up" : "scroll-hidden"}`}
-          style={{ "--stagger-delay": "400ms" } as React.CSSProperties}
+          className={`mt-4 transition-all ${
+            mounted
+              ? "animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500 fill-mode-both"
+              : "opacity-0"
+          }`}
           aria-label="Primary navigation"
         >
           <ul className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
@@ -102,8 +110,11 @@ export function Hero({ profile }: HeroProps) {
         {/* Social links */}
         {socialLinks.length > 0 && (
           <div
-            className={`mt-4 flex items-center gap-4 ${mounted ? "animate-fade-in-up" : "scroll-hidden"}`}
-            style={{ "--stagger-delay": "600ms" } as React.CSSProperties}
+            className={`mt-4 flex items-center gap-4 transition-all ${
+              mounted
+                ? "animate-in fade-in slide-in-from-bottom-4 duration-700 delay-700 fill-mode-both"
+                : "opacity-0"
+            }`}
           >
             {socialLinks.map((link) => (
               <SocialLink key={link.label} {...link} />

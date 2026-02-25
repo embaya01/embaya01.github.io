@@ -54,7 +54,13 @@ export function About({ profile, resumeUrl }: AboutProps) {
 
         <div className="mt-12 flex flex-col items-start gap-10 lg:flex-row">
           {/* Profile photo */}
-          <div className={`w-full flex-shrink-0 lg:w-1/3 ${isVisible ? "animate-fade-in-left" : "scroll-hidden"}`}>
+          <div
+            className={`w-full flex-shrink-0 lg:w-1/3 transition-all ${
+              isVisible
+                ? "animate-in fade-in slide-in-from-left-8 duration-700 fill-mode-both"
+                : "opacity-0"
+            }`}
+          >
             <Image
               src={profile.photoUrl || "/images/me.jpg"}
               alt={profile.name}
@@ -65,8 +71,12 @@ export function About({ profile, resumeUrl }: AboutProps) {
           </div>
 
           {/* Bio, contact details, and resume */}
-          <div className={`flex-1 ${isVisible ? "animate-fade-in-right" : "scroll-hidden"}`}
-            style={{ "--stagger-delay": "150ms" } as React.CSSProperties}
+          <div
+            className={`flex-1 transition-all ${
+              isVisible
+                ? "animate-in fade-in slide-in-from-right-8 duration-700 delay-150 fill-mode-both"
+                : "opacity-0"
+            }`}
           >
             <h3 className="font-heading text-2xl font-semibold text-foreground">
               {profile.title}

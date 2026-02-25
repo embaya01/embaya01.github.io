@@ -27,8 +27,11 @@ export function Portfolio({ projects }: PortfolioProps) {
         {/* Filter buttons */}
         {categories.length > 1 && (
           <div
-            className={`mt-8 flex flex-wrap items-center justify-center gap-3 ${isVisible ? "animate-fade-in-up" : "scroll-hidden"}`}
-            style={{ "--stagger-delay": "200ms" } as React.CSSProperties}
+            className={`mt-8 flex flex-wrap items-center justify-center gap-3 transition-all ${
+              isVisible
+                ? "animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 fill-mode-both"
+                : "opacity-0"
+            }`}
           >
             {categories.map((cat) => (
               <button
@@ -51,8 +54,12 @@ export function Portfolio({ projects }: PortfolioProps) {
           {filtered.map((project, index) => (
             <div
               key={project.id || project.title}
-              className={`group overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-primary hover:-translate-y-1 hover:shadow-lg ${isVisible ? "animate-fade-in-up" : "scroll-hidden"}`}
-              style={{ "--stagger-delay": `${300 + index * 120}ms` } as React.CSSProperties}
+              className={`group overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-primary hover:-translate-y-1 hover:shadow-lg ${
+                isVisible
+                  ? "animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both"
+                  : "opacity-0"
+              }`}
+              style={{ animationDelay: `${300 + index * 120}ms` }}
             >
               {project.imageUrl && (
                 <div className="relative aspect-video overflow-hidden">

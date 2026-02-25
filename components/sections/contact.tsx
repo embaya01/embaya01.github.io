@@ -97,6 +97,53 @@ export function Contact({ profile }: ContactProps) {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }))
   }
 
+  const infoCards = [
+    {
+      icon: MapPin,
+      title: "My Address",
+      content: <p className="mt-1 text-sm text-muted-foreground">{profile.address}</p>,
+    },
+    {
+      icon: Share2,
+      title: "Social Profiles",
+      content: (
+        <div className="mt-2 flex items-center gap-3">
+          {socialLinks.map((link) => (
+            <SocialIcon key={link.label} {...link} />
+          ))}
+        </div>
+      ),
+    },
+    {
+      icon: Mail,
+      title: "Email Me",
+      content: (
+        <a href={`mailto:${profile.email}`} className="mt-1 text-sm text-primary hover:underline">
+          {profile.email}
+        </a>
+      ),
+    },
+    {
+      icon: Phone,
+      title: "Call Me",
+      content: (
+        <p className="mt-1 text-sm text-muted-foreground">
+          {profile.phone}{" "}
+          {profile.whatsappLink && (
+            <a
+              href={profile.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              (WhatsApp)
+            </a>
+          )}
+        </p>
+      ),
+    },
+  ]
+
   return (
     <section id="contact" className="bg-background py-20">
       <div ref={sectionRef} className="mx-auto max-w-6xl px-4">
@@ -104,57 +151,31 @@ export function Contact({ profile }: ContactProps) {
 
         {/* Info cards */}
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          <div className={isVisible ? "animate-fade-in-up" : "scroll-hidden"} style={{ "--stagger-delay": "100ms" } as React.CSSProperties}>
-            <InfoCard icon={MapPin} title="My Address">
-              <p className="mt-1 text-sm text-muted-foreground">{profile.address}</p>
-            </InfoCard>
-          </div>
-
-          <div className={isVisible ? "animate-fade-in-up" : "scroll-hidden"} style={{ "--stagger-delay": "200ms" } as React.CSSProperties}>
-            <InfoCard icon={Share2} title="Social Profiles">
-              <div className="mt-2 flex items-center gap-3">
-                {socialLinks.map((link) => (
-                  <SocialIcon key={link.label} {...link} />
-                ))}
-              </div>
-            </InfoCard>
-          </div>
-
-          <div className={isVisible ? "animate-fade-in-up" : "scroll-hidden"} style={{ "--stagger-delay": "300ms" } as React.CSSProperties}>
-            <InfoCard icon={Mail} title="Email Me">
-              <a
-                href={`mailto:${profile.email}`}
-                className="mt-1 text-sm text-primary hover:underline"
-              >
-                {profile.email}
-              </a>
-            </InfoCard>
-          </div>
-
-          <div className={isVisible ? "animate-fade-in-up" : "scroll-hidden"} style={{ "--stagger-delay": "400ms" } as React.CSSProperties}>
-            <InfoCard icon={Phone} title="Call Me">
-              <p className="mt-1 text-sm text-muted-foreground">
-                {profile.phone}{" "}
-                {profile.whatsappLink && (
-                  <a
-                    href={profile.whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    (WhatsApp)
-                  </a>
-                )}
-              </p>
-            </InfoCard>
-          </div>
+          {infoCards.map((card, index) => (
+            <div
+              key={card.title}
+              className={`transition-all ${
+                isVisible
+                  ? "animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both"
+                  : "opacity-0"
+              }`}
+              style={{ animationDelay: `${100 + index * 100}ms` }}
+            >
+              <InfoCard icon={card.icon} title={card.title}>
+                {card.content}
+              </InfoCard>
+            </div>
+          ))}
         </div>
 
         {/* Contact form */}
         <form
           onSubmit={handleSubmit}
-          className={`mt-10 space-y-4 ${isVisible ? "animate-fade-in-up" : "scroll-hidden"}`}
-          style={{ "--stagger-delay": "500ms" } as React.CSSProperties}
+          className={`mt-10 space-y-4 transition-all ${
+            isVisible
+              ? "animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500 fill-mode-both"
+              : "opacity-0"
+          }`}
         >
           <div className="grid gap-4 md:grid-cols-2">
             <input
