@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ExternalLink, Github } from "lucide-react"
 import type { ProjectItem } from "@/lib/firestore"
 import { SectionHeading } from "@/components/ui/section-heading"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 interface PortfolioProps {
   projects: ProjectItem[]
@@ -13,18 +14,22 @@ interface PortfolioProps {
 export function Portfolio({ projects }: PortfolioProps) {
   const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))]
   const [active, setActive] = useState("All")
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLDivElement>()
 
   const filtered =
     active === "All" ? projects : projects.filter((p) => p.category === active)
 
   return (
     <section id="portfolio" className="bg-card py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <SectionHeading title="Portfolio" subtitle="My Projects" />
+      <div ref={sectionRef} className="mx-auto max-w-6xl px-4">
+        <SectionHeading title="Portfolio" subtitle="My Projects" animated isVisible={isVisible} />
 
         {/* Filter buttons */}
         {categories.length > 1 && (
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div
+            className={`mt-8 flex flex-wrap items-center justify-center gap-3 ${isVisible ? "animate-fade-in-up" : "scroll-hidden"}`}
+            style={{ "--stagger-delay": "200ms" } as React.CSSProperties}
+          >
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -43,10 +48,11 @@ export function Portfolio({ projects }: PortfolioProps) {
 
         {/* Projects Grid */}
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project) => (
+          {filtered.map((project, index) => (
             <div
               key={project.id || project.title}
-              className="group overflow-hidden rounded-lg border border-border bg-background transition-colors hover:border-primary"
+              className={`group overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-primary hover:-translate-y-1 hover:shadow-lg ${isVisible ? "animate-fade-in-up" : "scroll-hidden"}`}
+              style={{ "--stagger-delay": `${300 + index * 120}ms` } as React.CSSProperties}
             >
               {project.imageUrl && (
                 <div className="relative aspect-video overflow-hidden">
